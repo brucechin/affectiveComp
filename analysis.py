@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 
 #talk : 2-13
 talk_length = [52,22,9,11,30,45,4,19,10,32,43,19]
+
 user_id = [i for i in range(60)]
 data = pd.read_csv('data/test_data_pure.csv')
 
@@ -70,7 +71,8 @@ def plot_figure(array,name,type):
     plt.legend()
     plt.show()
 
-user_id = [19,20,21,22,24,27,28,29,32]
+user_id_10 = [20,22,27,28,29]
+talk_id = 10
 valence_audio = generate_2D_array(len(user_id))
 arousal_audio = generate_2D_array(len(user_id))
 valence_text = generate_2D_array(len(user_id))
@@ -80,18 +82,23 @@ arousal_fumoji = generate_2D_array(len(user_id))
 
 count = 0
 for i in user_id:
-    valence_audio[count] = audio_data[audio_data['Talk'] == 10][audio_data['UserID'] == i]['Valence'].values
-    arousal_audio[count] = audio_data[audio_data['Talk'] == 10][audio_data['UserID'] == i]['Arousal'].values
-    valence_text[count] = text_data[text_data['Talk'] == 10][text_data['UserID'] == i]['Valence'].values
-    arousal_text[count] = text_data[text_data['Talk'] == 10][text_data['UserID'] == i]['Arousal'].values
-    valence_fumoji[count] = fumoji_data[fumoji_data['Talk'] == 10][fumoji_data['UserID'] == i]['Valence'].values
-    arousal_fumoji[count] = fumoji_data[fumoji_data['Talk'] == 10][fumoji_data['UserID'] == i]['Arousal'].values
+    valence_audio[count] = audio_data[audio_data['Talk'] == talk_id][audio_data['UserID'] == i]['Valence'].values
+    arousal_audio[count] = audio_data[audio_data['Talk'] == talk_id][audio_data['UserID'] == i]['Arousal'].values
+    valence_text[count] = text_data[text_data['Talk'] == talk_id][text_data['UserID'] == i]['Valence'].values
+    arousal_text[count] = text_data[text_data['Talk'] == talk_id][text_data['UserID'] == i]['Arousal'].values
+    valence_fumoji[count] = fumoji_data[fumoji_data['Talk'] == talk_id][fumoji_data['UserID'] == i]['Valence'].values
+    arousal_fumoji[count] = fumoji_data[fumoji_data['Talk'] == talk_id][fumoji_data['UserID'] == i]['Arousal'].values
     count += 1
 
-plot_figure(valence_audio,'audio','valence')
-plot_figure(arousal_audio,'audio','arousal')
-plot_figure(valence_fumoji,'fumoji','valence')
-plot_figure(arousal_fumoji,'fumoji','arousal')
-plot_figure(valence_text,'text','valence')
-plot_figure(arousal_text,'text','arousal')
+# plot_figure(valence_audio,'audio','valence')
+# plot_figure(arousal_audio,'audio','arousal')
+
+# plot_figure(valence_fumoji,'fumoji','valence')
+# plot_figure(arousal_fumoji,'fumoji','arousal')
+# plot_figure(valence_text,'text','valence')
+# plot_figure(arousal_text,'text','arousal')
+
+
+
+
 
