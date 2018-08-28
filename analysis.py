@@ -46,14 +46,11 @@ def generate_2D_array(length):
 
 def plot_figure(array,name,type,index):
     plt.figure()
-    plt.title('{} {} trace'.format(name,type))
+    plt.title('conversation {} {} {} trace'.format(index,name,type))
     for i in range(len(array)):
         plt.plot(array[i],label = 'userid {}'.format(user_id[index][i]))
     plt.legend()
     plt.show()
-
-#user_id_10 = [20,22,27,28,29]
-#user_id = [19,20,21,23,24,27,28,29,30,31,32,33]
 
 
 valence_audio_all = []
