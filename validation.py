@@ -1,12 +1,15 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+from mimicry_analyser import MimiAnalyser
+
+ma = MimiAnalyser('data/test_data_pure.csv')
+
 
 #talk : 2-13
 talk_length = [52,22,9,11,30,45,4,19,10,32,43,19]
 
 data = pd.read_csv('data/test_data_pure.csv')
-
 
 text_data = data[data['Type'] == 'text']
 fumoji_data = data[data['Type'] == 'Fumoji']
