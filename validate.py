@@ -3,13 +3,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from mimicry_analyser import MimiAnalyser
 
-def quadrant_correction(norm_list, test_list):
-    correct_count = 0
-    for index, item in norm_list.iteritems():
-        if (item * test_list[index] > 0) or (item == test_list[index]):
-           correct_count += 1
-    return correct_count/len(norm_list)
-
 
 ma = MimiAnalyser('data/test_data_pure.csv')
 THE_TALK = 12
@@ -30,9 +23,9 @@ correctionQV = []
 correctionQA = []
 
 for index, r in dfAudioV.iterrows():
-    correctionQV.append(quadrant_correction(averageQV, r))
+    correctionQV.append(ma.quadrantCorrection(averageQV, r))
 for index, r in dfAudioA.iterrows():
-    correctionQA.append(quadrant_correction(averageQA, r))
+    correctionQA.append(ma.quadrantCorrection(averageQA, r))
     
 quadrantCorrectionV = pd.Series(correctionQV, index = ma.user_id[THE_TALK-2]).sort_values()
 quadrantCorrectionA = pd.Series(correctionQA, index = ma.user_id[THE_TALK-2]).sort_values()
@@ -51,10 +44,10 @@ correctionQV_K = []
 correctionQA_K = []
 
 for index, r in dfK_AudioV.iterrows():
-    correctionQV_K.append(quadrant_correction(mean_k_v, r))
+    correctionQV_K.append(ma.quadrantCorrection(mean_k_v, r))
 
 for index, r in dfK_AudioA.iterrows():
-    correctionQA_K.append(quadrant_correction(mean_k_a, r))
+    correctionQA_K.append(ma.quadrantCorrection(mean_k_a, r))
 
 correctionQV_K = pd.Series(correctionQV_K, index = ma.user_id[THE_TALK-2]).sort_values()
 correctionQA_K = pd.Series(correctionQA_K, index = ma.user_id[THE_TALK-2]).sort_values()

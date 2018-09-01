@@ -122,7 +122,6 @@ def quadrant_correction(norm_list, test_list):
            correct_count += 1
     return correct_count/len(norm_list)
 
-
 valence_audio_all = []
 arousal_audio_all = []
 
