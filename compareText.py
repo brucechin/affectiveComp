@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from mimicry_analyser import MimiAnalyser
 
 ma = MimiAnalyser('data/test_data_filtered.csv')
-THE_TALK = 5
+THE_TALK = 13
 
 dfAudioV = ma.get_V_FrameByTalk(THE_TALK, 'Audio')
 dfAudioA = ma.get_A_FrameByTalk(THE_TALK, 'Audio')
@@ -26,8 +26,10 @@ aveFumojiA = dfFumojiA.apply(np.mean, axis = 0)
 
 data = {"aveAudioV" : aveAudioV.values, "aveFumojiV" : aveFumojiV.values, "aveTextV" : aveTextV.values}
 
+# print(aveAudioV, aveFumojiV, aveTextV)
+print(aveAudioA, aveFumojiA, aveTextA)
 
-print("fumoji error:", ma.getErrorOfSeries(aveAudioV, aveFumojiV),"text error:", ma.getErrorOfSeries(aveAudioV, aveTextV))
+# print("fumoji error:", ma.getErrorOfSeries(aveAudioV, aveFumojiV),"text error:", ma.getErrorOfSeries(aveAudioV, aveTextV))
 
-print("fumoji winning rate:", ma.getWinningRate(text = aveTextV, fumo = aveFumojiV, audi = aveAudioV))
+# print("fumoji winning rate:", ma.getWinningRate(text = aveTextV, fumo = aveFumojiV, audi = aveAudioV))
 ma.plotDict(data)
