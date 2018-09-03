@@ -2,8 +2,6 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
-
-
 class MimiAnalyser(object):
 	"""docstring for MimiAnalyser"""
 	def __init__(self, csv = 'data/test_data_pure.csv'):
@@ -140,12 +138,20 @@ class MimiAnalyser(object):
 	    # plt.show()
 	    plt.savefig('c{}{}{}'.format(talk_id[index],name,type))	
 
-	def plotDict(self, dictionary):
+	def plotDict(self, dictionary, title):
 	    plt.figure(figsize = (14.4, 8))
+	    plt.title(title)
 	    for key, item in dictionary.items():
 	        plt.plot(item, label = key)
 	    plt.legend()
 	    plt.show()
+
+	def plotSeries(self, s, title):
+		plt.figure(figsize = (14.4, 8))
+		plt.title(title)
+		plt.plot(s)
+		plt.legend()
+		plt.show()
 
 	def getErrorOfSeries(self, s1, s2):
 		error = 0
