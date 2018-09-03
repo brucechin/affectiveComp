@@ -44,6 +44,6 @@ for talk in talk_id:
         arousal_fumoji_error[loc].append(np.abs(fumoji_arousal_mean - audio_arousal_mean))
 
 for i in range(4):
-    print('Fumoji the {} quarter valence error mean {} arousal error mean {}'.format(i+1,np.mean(valence_fumoji_error[i]),np.mean(arousal_fumoji_error[i])))
-    print('Text the {} quarter valence error mean {} arousal error mean {}'.format(i+1,np.mean(valence_text_error[i]),np.mean(arousal_text_error[i])))
+    #print('Fumoji the {} quarter valence error mean {} arousal error mean {}, has {} sentences'.format(i+1,np.mean(valence_fumoji_error[i]),np.mean(arousal_fumoji_error[i]),len(valence_text_error[i])))
+    print('Text the {} quarter valence error mean {} arousal error mean {}, has {} sentences'.format(i+1,np.mean(valence_text_error[i]),np.mean(arousal_text_error[i]),len(valence_text_error[i])))
 
