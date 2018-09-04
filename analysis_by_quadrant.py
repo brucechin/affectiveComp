@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 #talk : 2-13
 talk_length = [52,22,9,11,30,45,4,19,10,32,43,19]#每段话有多少句话
 
-data = pd.read_csv('data/test_data_pure.csv')
+data = pd.read_csv('data/test_data_filtered.csv')
 
 
 text_data = data[data['Type'] == 'text']
@@ -22,8 +22,12 @@ users_of_talk = []
 for i in range(2, 14):  # 每段话有哪些user做了
     users_of_talk.append(list(set((audio_data[audio_data['Talk'] == i]['UserID'].values))))
 
+
+filtered_sentences_all = {}#记录下error std 在正常范围内的talk-sentence id
+
 for talk in talk_id:
     if talk != 6:
+        filtered_sentences = []
         for sentence in range(1,talk_length[talk-2] + 1):
             text_valence_error_tmp = []
             text_arousal_error_tmp = []
@@ -38,8 +42,6 @@ for talk in talk_id:
                     text_arousal_error_tmp.append(text_data_tmp['Arousal'].values[0] - audio_data_tmp['Arousal'].values[0])
                     fumoji_valence_error_tmp.append(fumoji_data_tmp['Valence'].values[0] - audio_data_tmp['Valence'].values[0])
                     fumoji_arousal_error_tmp.append(fumoji_data_tmp['Arousal'].values[0] - audio_data_tmp['Arousal'].values[0])
-
-
 
             audio_valence_mean = np.mean(audio_data[audio_data['Talk'] == talk][audio_data['Sentence'] == sentence][['Valence']].values)
             audio_arousal_mean = np.mean(audio_data[audio_data['Talk'] == talk][audio_data['Sentence'] == sentence][['Arousal']].values)
@@ -62,15 +64,17 @@ for talk in talk_id:
             # print('fumoji valence error std{}'.format(np.std(fumoji_valence_error_tmp)))
             # print('fumoji_arousal_error std{}'.format(np.std(fumoji_arousal_error_tmp)))
 
-            bottleneck = 0.8
-            if(np.std(text_valence_error_tmp) < bottleneck):
+            bottleneck = 1.5
+            if(np.std(text_valence_error_tmp) < bottleneck and np.std(text_arousal_error_tmp) < bottleneck):
                 valence_text_error[loc].append(np.abs(text_valence_mean - audio_valence_mean))
-            if(np.std(text_arousal_error_tmp) < bottleneck):
                 arousal_text_error[loc].append(np.abs(text_arousal_mean - audio_arousal_mean))
-            if(np.std(fumoji_valence_error_tmp) < bottleneck):
+                filtered_sentences.append(sentence)
+            if(np.std(fumoji_valence_error_tmp) < bottleneck and np.std(fumoji_arousal_error_tmp) < bottleneck):
                 valence_fumoji_error[loc].append(np.abs(fumoji_valence_mean - audio_valence_mean))
-            if(np.std(fumoji_arousal_error_tmp) < bottleneck):
                 arousal_fumoji_error[loc].append(np.abs(fumoji_arousal_mean - audio_arousal_mean))
+        filtered_sentences_all[talk] = pd.Series(filtered_sentences)
+
+print(filtered_sentences_all)
 
 print('when remove error std lager than {}'.format(bottleneck))
 
