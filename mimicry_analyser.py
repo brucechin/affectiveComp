@@ -49,7 +49,6 @@ class MimiAnalyser(object):
 			self.aText.append(arousal_text)
 		# print(self.vAudio)
 
-
 	def generate_2D_array(self, length):
 	    return [[] for i in range(length)]
 

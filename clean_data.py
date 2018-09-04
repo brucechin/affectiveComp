@@ -3,7 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 
-data = pd.read_csv('data/test_data_pure.csv')
+data = pd.read_csv('data/test_data_filtered.csv')
 text_data = data[data['Type'] == 'text']
 fumoji_data = data[data['Type'] == 'Fumoji']
 audio_data = data[data['Type'] == 'Audio']
