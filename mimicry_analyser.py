@@ -117,25 +117,51 @@ class MimiAnalyser(object):
 	def plotTalk(self, Talk, Type):
 	    plt.figure(figsize = (28.8, 16.39))
 	    plt.title('conversation {} {} {}'.format(Talk, 'valence', Type))
-	    array = self.get_V_FrameByTalk(Talk, Type)
-	    for i in range(len(array)):
-	        plt.plot(array[i],label = 'userid {}'.format(self.usersOfTalk[Talk-2][i]))
-	    array = pd.DataFrame(array)
-	    plt.plot(array.apply(np.mean, axis = 0), label = 'average')
+	    df = self.get_V_FrameByTalk(Talk, Type)
+
+	    for index, user in df.iterrows():
+	    	plt.plot(user, label = 'userid' + str(index))
+
+	    plt.plot(df.apply(np.mean, axis = 0), label = 'average')
 	    plt.legend()
 	    # plt.show()
-	    plt.savefig('c{}{}{}'.format(talk_id[index],name,type))
+	    plt.savefig('c{}{}{}'.format(self.talk_id[Talk],'valence',Type))
 	  
 	    plt.figure(figsize = (28.8, 16.39))
 	    plt.title('conversation {} {} {}'.format(Talk, 'arousal', Type))
-	    array = self.get_A_FrameByTalk(Talk, Type)
-	    for i in range(len(array)):
-	        plt.plot(array[i],label = 'userid {}'.format(self.usersOfTalk[Talk-2][i]))
-	    array = pd.DataFrame(array)
-	    plt.plot(array.apply(np.mean, axis = 0), label = 'average')
+	    df = self.get_A_FrameByTalk(Talk, Type)
+	    for index, user in df.iterrows():
+	    	plt.plot(user, label = 'userid'+ str(index))
+	    plt.plot(df.apply(np.mean, axis = 0), label = 'average')
 	    plt.legend()
 	    # plt.show()
-	    plt.savefig('c{}{}{}'.format(talk_id[index],name,type))	
+	    plt.savefig('c{}{}{}'.format(self.talk_id[Talk],'arousal',Type))
+
+	def plotTalkError(self, Talk, Type):
+	    plt.figure(figsize = (28.8, 16.39))
+	    plt.title('conversation {} {} {} error'.format(Talk, 'valence', Type))
+	    dfType = self.get_V_FrameByTalk(Talk, Type)
+	    dfAudio = self.get_V_FrameByTalk(Talk, 'Audio')
+	    df = dfAudio.add(dfType.mul(-1))
+	    # for index, user in df.iterrows():
+	    # 	plt.plot(user, label = 'userid' + str(index))
+
+	    plt.plot(df.apply(np.std, axis = 0), label = 'average')
+	    plt.legend()
+	    # plt.show()
+	    plt.savefig('c{}{}{}'.format(Talk,'valenceError',Type))
+	  
+	    plt.figure(figsize = (28.8, 16.39))
+	    plt.title('conversation {} {} {}'.format(Talk, 'arousal', Type))
+	    dfType = self.get_A_FrameByTalk(Talk, Type)
+	    dfAudio = self.get_A_FrameByTalk(Talk, 'Audio')
+	    df = dfAudio.add(dfType.mul(-1))
+	    # for index, user in df.iterrows():
+	    # 	plt.plot(user, label = 'userid' + str(index))
+	    plt.plot(df.apply(np.std, axis = 0), label = 'average')
+	    plt.legend()
+	    # plt.show()
+	    plt.savefig('c{}{}{}'.format(Talk,'arousalError',Type))		    
 
 	def plotDict(self, dictionary, title):
 	    plt.figure(figsize = (14.4, 8))
@@ -151,6 +177,7 @@ class MimiAnalyser(object):
 		plt.plot(s)
 		plt.legend()
 		plt.show()
+
 
 	def getErrorOfSeries(self, s1, s2):
 		error = 0

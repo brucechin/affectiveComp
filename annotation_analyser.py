@@ -72,4 +72,4 @@ class Annotation(object):
 
 
 # a = Annotation()
-# print(a.getTalkSentenceByAnnotation('音量大小','变大'))
+# print(a.getTalkSentenceByAnnotation('文本有无语气词','有'))
